@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { APIURL } from '../../../constants/global'
 import { useNavigate } from "react-router-dom";
 
-import useAuthData from './../../../Services/useAuthData';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserData } from '../../../features/Auth/userSlice';
 
 export default function CustomerLogin() {
-    const {setAuthData,getAuthData} = useAuthData();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
     const [inputValues, setLogin] = useState ({
     isLogin: false,
     email:'',
@@ -18,10 +20,7 @@ export default function CustomerLogin() {
   });
 
   useEffect(()=>{
-    const authDetail = getAuthData();
-    if(authDetail.utoken){
-      navigate("/profile");
-    }
+    
   })
 
   const handleInput = (e) =>{
@@ -43,10 +42,7 @@ export default function CustomerLogin() {
           if(api_status === 200){
             setLogin({ ...inputValues, isLogin: true, error_list: [], warningmsg: '', 
             utoken: resp.token });
-            setAuthData(true,'user',resp.token)
-            // localStorage.setItem("authenticated", true);
-            // localStorage.setItem("utoken", resp.token);
-            // localStorage.setItem("utype", 'user');
+            dispatch(setUserData({ token: resp.token, data: null, ustatus: true }))
             navigate("/profile");
             
           }else if(api_status === 401){
@@ -73,7 +69,7 @@ export default function CustomerLogin() {
                             <label>Password</label>
                             <span className="text-danger">{inputValues.error_list.password}</span>
                         </div>
-                        
+                        <p className="text-danger">{inputValues.warningmsg}</p>
                         <button type="submit" className="btn btn-primary mt-2 float-end">Submit</button>
                     </div>
                 </div>

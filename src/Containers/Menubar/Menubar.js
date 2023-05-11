@@ -5,7 +5,25 @@ import  CustomerLogin  from "../../Components/Customer/Login/Login";
 import Customers from "../../Components/Admin/Customers/Customers";
 import CustomerNotification from "../../Components/Admin/CustomerNotification/CustomerNotification";
 import Profile from "../../Components/Customer/Profile/Profile";
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setLogout } from "../../features/Auth/adminSlice";
+import { setCustomerLogout } from "../../features/Auth/userSlice";
+
 export default function Menubar(props) {
+    const adminDetail = useSelector((c) => c.admin);
+    const customerDetail = useSelector((c) => c.customer);
+    const dispatch = useDispatch();
+    const handleAdminLogout = () => {
+        dispatch(setLogout());
+       // navigate("/");
+        window.location.href = "/";
+    }
+    const handleCustomerLogout = () => {
+        dispatch(setCustomerLogout());
+        // navigate("/");
+        window.location.href = "/";
+    }
     return (
         <Router>
         <nav className="navbar  bg-secondary navbar-dark">
@@ -20,9 +38,21 @@ export default function Menubar(props) {
                     />
                 </a>
                     <ul className="list-group list-group-horizontal-lg">
-                        <li className="list-group-item"><Link className="nav-link" to="/admin-login">Admin Login</Link></li>
+                        {!adminDetail.isLoggedIn  && 
+                            <li className="list-group-item"><Link className="nav-link" to="/admin-login">Admin Login</Link></li>
+                        }    
+                        { !customerDetail.isLoggedIn &&             
                         <li className="list-group-item"><Link className="nav-link"  to="/customer-login">Customer Login</Link></li>
+                        
+                        }
                         <li className="list-group-item">Contact us</li>
+                        {customerDetail.isLoggedIn &&  
+                            <li className="list-group-item" onClick={() => handleCustomerLogout()}>Logout</li>
+                        }
+                        {adminDetail.isLoggedIn &&
+                            <li className="list-group-item" onClick={() => handleAdminLogout()}>Logout</li>
+                        }
+                        
                 </ul>
             </div>
         </nav>
@@ -41,3 +71,4 @@ export default function Menubar(props) {
 
     );
 }
+

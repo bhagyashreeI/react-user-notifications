@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link, Router, Route, Routes } from 'react-router-dom';
 import CustomerNotification from '../CustomerNotification/CustomerNotification';
+import { useSelector } from 'react-redux';
 
 export default function Customers(){
+    
     return (
         <div>
             <strong className='mt-2'>Customer List</strong>
             
-            
 
-            <table className="table m-4 table-bordered ">
+            <table className="table m-4 table-bordered table-responsive">
                 <thead>
                     <tr className='table-seconary'>
                         

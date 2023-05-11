@@ -4,7 +4,7 @@ export default function CustomerNotification({id}){
     return (
         <div>
             <strong className='mt-2'>Customer Notifications</strong>
-            <table className="table m-4 table-bordered ">
+            <table className="table m-4 table-bordered table-responsive">
                 <thead>
                     <tr className='table-seconary'>
                         <th scope="col">#</th>

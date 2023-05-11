@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { EnvelopeCheckFill, Phone, PhoneLandscape } from 'react-bootstrap-icons';
-import useAuthData from './../../../Services/useAuthData';
+
 import { APIURL } from './../../../constants/global';
 //import { ArrowRight } from 'react-bootstrap-icons';
-
+import { getUserData,setUserData } from '../../../features/Auth/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 export default function Profile() {
-    const { getAuthData } = useAuthData();
     const [profiledata, setProfiledata] = useState();
-
+    const authDetail = useSelector((c) => c.customer);
 
     const getUserData = () => {
-        const authDetail = getAuthData();
         fetch(APIURL + "/user", {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${authDetail.utoken}` }
+            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${authDetail.token}` }
         }).then(
             async res => {
                 const resp = await res.json();
-                setProfiledata(resp)
+                setProfiledata(resp);
             }
         )
     }
