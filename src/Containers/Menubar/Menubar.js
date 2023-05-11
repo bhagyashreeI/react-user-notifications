@@ -1,16 +1,18 @@
 import React, { lazy, Suspense, useState, useEffect }  from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Login from "../../Components/Admin/Login/Login";
 import  CustomerLogin  from "../../Components/Customer/Login/Login";
 import Customers from "../../Components/Admin/Customers/Customers";
 import CustomerNotification from "../../Components/Admin/CustomerNotification/CustomerNotification";
 import Profile from "../../Components/Customer/Profile/Profile";
 
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogout } from "../../features/Auth/adminSlice";
 import { setCustomerLogout } from "../../features/Auth/userSlice";
 
 export default function Menubar(props) {
+    //const navigate = useNavigate();
     const adminDetail = useSelector((c) => c.admin);
     const customerDetail = useSelector((c) => c.customer);
     const dispatch = useDispatch();
